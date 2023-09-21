@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace SimCity
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+<<<<<<< HEAD
+        private Model.gameModel _model;
+        private ViewModel.gameViewModel _viewModel;
+        private MainWindow _view = null!;
+
+        public App()
+        {
+            Startup += new StartupEventHandler(App_Startup);
+        }
+
+        private void App_Startup(object? sender, StartupEventArgs e)
+        {
+
+            _model = new Model.gameModel();
+            _viewModel = new ViewModel.gameViewModel(_model);
+            _view = new MainWindow();
+            _view.DataContext = _viewModel;
+            _view.Show();
+
+        }
+    }
+=======
+		private gameModel _model;
+		private gameViewModel _viewModel;
+		private MainWindow _view = null!;
+
+		public App()
+		{
+			Startup += new StartupEventHandler(App_Startup);
+		}
+
+		private void App_Startup(object? sender, StartupEventArgs e)
+		{
+
+			_model = new gameModel();
+			_viewModel = new gameViewModel(_model);
+			_view = new MainWindow();
+			_view.DataContext = _viewModel;
+			_view.Show();
+
+		}
+	}
+>>>>>>> Basic_backendwithtable
+}

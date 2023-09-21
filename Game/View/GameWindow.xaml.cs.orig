@@ -1,0 +1,386 @@
+﻿using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Controls;
+using SimCity.ViewModel;
+using SimCity.Model;
+using System.Timers;
+using System;
+<<<<<<< HEAD
+using System.Threading.Tasks;
+=======
+using System.Windows.Data;
+>>>>>>> feature_SM-62_Információk_lekérdezése
+
+namespace SimCity.View
+{
+    public partial class GameWindow : Window
+    {
+        private GameModel _gameModel;
+        private gameViewModel _gameViewModel;
+
+        private Button speedBtn;
+        private Button dateBtn;
+
+        public GameWindow(string path = "")
+        {
+            GameTimer.GameTimerElapsed += new EventHandler<TimerEventArgs>(OnTimedEvent);
+            GameEconomy.EconomyChanged += new EventHandler<EconomyEventArgs>(OnFundsEvent);
+            gameViewModel.FieldInfoEvent += new EventHandler<FieldEventArgs>(OnFieldInfoEvent);
+
+            InitializeComponent();
+            //setItemGrid();
+            setMenuGrid();
+            FileGamePersistence pers = new FileGamePersistence();
+            _gameModel = new GameModel(pers);
+            _gameViewModel = new gameViewModel(_gameModel);
+            gameTableGrid.DataContext = _gameViewModel;
+            itemGrid.DataContext = _gameViewModel;
+<<<<<<< HEAD
+
+            GameTimer.GameTimerElapsed += new EventHandler<TimerEventArgs>(OnTimedEvent);
+
+            if (path != "")
+            {
+                LoadGameFromPath(path);
+            }
+=======
+>>>>>>> feature_SM-62_Információk_lekérdezése
+        }
+
+        public void OnFieldInfoEvent(object source, FieldEventArgs e)
+        {
+            if(e.Zone == null)  // facility
+            {
+                string szoveg = e.Facility.TableFieldType().ToString();
+                this.Dispatcher.Invoke(() =>
+                {
+                    infoGridClose(null, null);
+
+                    title.Text = "Facility Infos";
+                    infoGrid.IsEnabled = true;
+                    infoGrid.Visibility = Visibility.Visible;
+
+                    int fontSize = 20;
+
+                    // First element
+                    TextBlock text = new TextBlock();
+                    text.FontSize = fontSize;
+                    text.Text = "Field type:\n" + szoveg;
+
+                    Grid.SetColumn(text, 0);
+                    Grid.SetRow(text, 0);
+                    infosGrid.Children.Add(text);
+                });
+            }
+
+            else if(e.Facility == null)  // zone
+            {
+                string szoveg = e.Zone.TableFieldType().ToString();
+                this.Dispatcher.Invoke(() =>
+                {
+                    infoGridClose(null, null);
+
+                    title.Text = "Zone Infos";
+                    infoGrid.IsEnabled = true;
+                    infoGrid.Visibility = Visibility.Visible;
+
+                    int fontSize = 20;
+
+                    // First element
+                    TextBlock text = new TextBlock();
+                    text.FontSize = fontSize;
+                    text.Text = "Field type:\n" + szoveg;
+
+                    Grid.SetColumn(text, 0);
+                    Grid.SetRow(text, 0);
+                    infosGrid.Children.Add(text);
+                });
+            }
+        }
+        public void OnTimedEvent(object source, TimerEventArgs e)
+        {
+            string szoveg = e.GameYear.ToString() + ". " + e.GameMonth.ToString() + ". " + e.GameDay.ToString() + ".";
+            this.Dispatcher.Invoke(() =>
+            {
+                dateBtn.Content = szoveg;
+            });
+        }
+
+        public void OnFundsEvent(object source, EconomyEventArgs e)
+        {
+            string szoveg = e.GameFunds + "$";
+            this.Dispatcher.Invoke(() =>
+            {
+                moneyText.Text = szoveg;
+            });
+        }
+
+        /*public void setItemGrid()
+        {
+            int rowNum = 9;
+            int colNum = 2;
+
+            for (int i = 0; i < rowNum; i++)
+            {
+                for (int j = 0; j < colNum; j++)
+                {
+                    Button button = new Button();
+                    button.Content = "Item " + (i * colNum + j + 1).ToString();
+                    button.Name = "Button" + (i * colNum + j + 1).ToString();
+                    button.FontSize = 20;
+
+                    Grid.SetColumn(button, j);
+                    Grid.SetRow(button, i);
+                    itemGrid.Children.Add(button);
+                }
+            }
+        }*/
+        public void setMenuGrid()
+        {
+            int fontSize = 20;
+
+            // Infos Button
+            Button button = new Button();
+            button.Content = "Infos";
+            button.Name = "infosBtn";
+            button.FontSize = fontSize;
+            button.Click += openInfos;
+
+            Grid.SetColumn(button, 0);
+            Grid.SetRow(button, 0);
+            menuGrid.Children.Add(button);
+
+            // Management Button
+            button = new Button();
+            button.Content = "Management";
+            button.Name = "managmentBtn";
+            button.FontSize = fontSize;
+            button.Click += openManagement;
+
+            Grid.SetColumn(button, 1);
+            Grid.SetRow(button, 0);
+            menuGrid.Children.Add(button);
+
+            // Menu Button
+            button = new Button();
+            button.Content = "Menu";
+            button.Name = "menuBtn";
+            button.FontSize = fontSize;
+            button.Click += goToMenu;
+
+            Grid.SetColumn(button, 2);
+            Grid.SetRow(button, 0);
+            menuGrid.Children.Add(button);
+
+            // Date Button
+            dateBtn = new Button();
+            dateBtn.Content = "2000. January. 1.";
+            dateBtn.Name = "dateBtn";
+            dateBtn.FontSize = fontSize;
+
+            Grid.SetColumn(dateBtn, 3);
+            Grid.SetRow(dateBtn, 0);
+            menuGrid.Children.Add(dateBtn);
+
+            // Speed Button
+            speedBtn = new Button();
+            speedBtn.Content = "Normal";
+            //speedBtn.Name = "dateBtn";
+            speedBtn.FontSize = fontSize;
+            speedBtn.Click += changeSpeed;
+
+            Grid.SetColumn(speedBtn, 4);
+            Grid.SetRow(speedBtn, 0);
+            menuGrid.Children.Add(speedBtn);
+
+            // Money TextBlock
+        }
+        public void changeSpeed(object sender, RoutedEventArgs e)
+        {
+            // here we need to change the actual speed
+
+            string content = (string)speedBtn.Content;
+
+            switch (content)
+            {
+                case "Paused":
+                    _gameModel.PlaySpeed = PlaySpeedType.Normal;
+                    speedBtn.Content = "Normal";
+                    break;
+                case "Normal":
+                    _gameModel.PlaySpeed = PlaySpeedType.Faster;
+                    speedBtn.Content = "Fast";
+                    break;
+                case "Fast":
+                    _gameModel.PlaySpeed = PlaySpeedType.Quickest;
+                    speedBtn.Content = "Fastest";
+                    break;
+                case "Fastest":
+                    _gameModel.PlaySpeed = PlaySpeedType.GamePaused;
+                    speedBtn.Content = "Paused";
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void openManagement(object sender, RoutedEventArgs e)
+        {
+            infoGridClose(null, null);
+
+            title.Text = "Management";
+            infoGrid.IsEnabled = true;
+            infoGrid.Visibility = Visibility.Visible;
+
+            int fontSize = 20;
+
+            // First element
+            TextBlock text = new TextBlock();
+            text.FontSize = fontSize;
+            text.Text = "Tax Rate:";
+
+            Grid.SetColumn(text, 0);
+            Grid.SetRow(text, 0);
+            infosGrid.Children.Add(text);
+
+            // First input
+            TextBox text2 = new TextBox();
+            text2.FontSize = fontSize;
+            text2.Text = "0";
+            text2.Margin = new Thickness(10);
+
+            Grid.SetColumn(text2, 1);
+            Grid.SetRow(text2, 0);
+            infosGrid.Children.Add(text2);
+
+            // Second element
+            text = new TextBlock();
+            text.FontSize = fontSize;
+            text.Text = "Speed:";
+
+            Grid.SetColumn(text, 0);
+            Grid.SetRow(text, 1);
+            infosGrid.Children.Add(text);
+
+            // Second input
+            text2 = new TextBox();
+            text2.FontSize = fontSize;
+            text2.Text = "0";
+            text2.Margin = new Thickness(10);
+
+            Grid.SetColumn(text2, 1);
+            Grid.SetRow(text2, 1);
+            infosGrid.Children.Add(text2);
+        }
+        public void openInfos(object sender, RoutedEventArgs e)
+        {
+            infoGridClose(null, null);
+
+            title.Text = "Infos";
+            infoGrid.IsEnabled = true;
+            infoGrid.Visibility = Visibility.Visible;
+
+            int fontSize = 20;
+
+            // First element
+            TextBlock text = new TextBlock();
+            text.FontSize = fontSize;
+            text.Text = "Tax Rate: " + _gameModel.TaxRate;
+
+            Grid.SetColumn(text, 0);
+            Grid.SetRow(text, 0);
+            infosGrid.Children.Add(text);
+
+            // Second element
+            text = new TextBlock();
+            text.FontSize = fontSize;
+            text.Text = "Happiness of\nthe population:\n" + _gameModel.HappinessLevel;
+
+            Grid.SetColumn(text, 0);
+            Grid.SetRow(text, 1);
+            infosGrid.Children.Add(text);
+
+            // Third element
+            text = new TextBlock();
+            text.FontSize = fontSize;
+            text.Text = "Number of\npeople: " + _gameModel.PopulationCounter;
+
+            Grid.SetColumn(text, 0);
+            Grid.SetRow(text, 2);
+            infosGrid.Children.Add(text);
+        }
+        public void infoGridClose(object sender, RoutedEventArgs e)
+        {
+            infoGrid.IsEnabled = false;
+            infoGrid.Visibility = Visibility.Collapsed;
+
+            int intTotalChildren = infosGrid.Children.Count - 1;
+            for (int intCounter = intTotalChildren; intCounter >= 0; intCounter--)
+            {
+                if (infosGrid.Children[intCounter].GetType() == typeof(TextBox))
+                {
+                    TextBox ucCurrentChild = (TextBox)infosGrid.Children[intCounter];
+                    infosGrid.Children.Remove(ucCurrentChild);
+                }
+                else if (infosGrid.Children[intCounter].GetType() == typeof(TextBlock))
+                {
+                    TextBlock ucCurrentChild = (TextBlock)infosGrid.Children[intCounter];
+                    infosGrid.Children.Remove(ucCurrentChild);
+                }
+            }
+
+            gameTableGrid.IsEnabled = true;
+            gameTableGrid.Visibility = Visibility.Visible;
+        }
+        public void goToMenu(object sender, RoutedEventArgs e)
+        {
+            View.MainWindow mainWindow = new View.MainWindow();
+            mainWindow.Show();
+
+            this.Close();
+        }
+        public async void LoadGameFromPath(string path)
+        {
+            try
+            {
+                await _gameModel.LoadGameAsync(path);
+                _gameViewModel = new ViewModel.gameViewModel(_gameModel);
+
+                _gameViewModel.RefreshTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                //throw new Exception();
+            }
+        }
+        public async void LoadGame(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "Loading game";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    await _gameModel.LoadGameAsync(openFileDialog.FileName);
+                    _gameViewModel = new ViewModel.gameViewModel(_gameModel);
+
+
+
+                }
+                    _gameViewModel.RefreshTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                //throw new Exception();
+            }
+        }
+        public void SizeChangedEvent(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.Width = (float)this.ActualWidth - 515;
+            _gameViewModel.Height = (float)this.ActualHeight - 90;
+            _gameViewModel.ResizeTable();
+        }
+    }
+}

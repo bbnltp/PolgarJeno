@@ -1,0 +1,60 @@
+# Default image (https://hub.docker.com/_/microsoft-dotnet-core-sdk/)
+image: mcr.microsoft.com/dotnet/sdk:6.0
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - dotnet --version
+
+# Build
+build-model:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  tags: [windows]
+  script:
+    - dotnet build SimCity.sln
+  after_script:
+    - mv Game/bin/Debug/net6.0-windows ./executable
+  artifacts:
+    paths:
+      - executable
+    untracked: false
+    when: on_success
+    expire_in: 5 days
+
+# Test
+test-model:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  tags: [windows]
+  script:
+#    - dotnet test
+    - cd Test
+    - cd SimCityTests
+    - dotnet add package coverlet.collector
+    - dotnet add package JunitXml.TestLogger
+    - dotnet test -c Debug
+              -r ./cobertura
+              --collect:"XPlat Code Coverage"
+              --test-adapter-path:.
+              --logger:"junit;LogFilePath=Test/SimCityTests/coverage.xml;MethodFormat=Class;FailureBodyFormat=Verbose"
+  after_script:
+    - mv Test/SimCityTests/coverage.xml ./results
+  artifacts:
+    paths:
+      - ./results
+    untracked: false
+    when: on_success
+    expire_in: 5 days
+
+
+deploy:
+  stage: deploy
+  script:
+    - dotnet publish -c Release -o publish
+#  artifacts:
+#    paths:
+#      - publish

@@ -1,0 +1,157 @@
+﻿<Window x:Class="SimCity.View.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodel="clr-namespace:SimCity.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:gameViewModel}"
+        mc:Ignorable="d"
+        Title="GameWindow" Height="900" Width="1600" MinHeight="820" MinWidth="1400"
+        HorizontalAlignment="Center" VerticalAlignment="Top" SizeChanged="SizeChangedEvent">
+    <Grid>
+        <Grid Name="menuGrid"  Height="50"
+            VerticalAlignment="Top"
+            Margin="150, 0, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <TextBlock Name="moneyText" Grid.Column="5" Grid.Row="0"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                FontSize="25"> Placeholder
+            </TextBlock>
+        </Grid>
+
+        <Grid Name="infoGrid" Width="350"
+            HorizontalAlignment="Right"
+            Margin="0 ,50, 0, 0"
+            IsEnabled="True" Visibility="Visible"
+            Background="LightBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="title"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Margin="0, 25, 0, 0"
+                FontSize="50">
+            </TextBlock>
+
+            <Grid Name="infosGrid" Height="600"
+            VerticalAlignment="Top" Background="OrangeRed"
+            Margin="10, 100, 10, 90">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="3*" />-->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+            </Grid>
+
+            <Button Name="saveBtn" Width="100" Height="30"
+             VerticalAlignment="Bottom" HorizontalAlignment="Right"
+             Margin="0, 0, 240, 10"
+             Click="SaveGame"
+             FontSize="20">Save
+            </Button>
+
+            <Button Name="loadBtn" Width="100" Height="30"
+             VerticalAlignment="Bottom" HorizontalAlignment="Right"
+             Margin="0, 0, 10, 45"
+             Click="LoadGame"
+             FontSize="20">Load
+            </Button>
+
+            <Button Name="catastrophyBtn" Width="100" Height="30"
+             VerticalAlignment="Bottom" HorizontalAlignment="Right"
+             Margin="0, 0, 10, 10"
+             Click="MakeCatasrophy"
+             FontSize="20">Catastropy
+            </Button>
+
+
+            <Button Name="newBtn" Width="100" Height="30"
+             VerticalAlignment="Bottom" HorizontalAlignment="Right"
+             Margin="0, 0, 240, 45"
+             Click="NewGame"
+             FontSize="20">New Game
+            </Button>
+        </Grid>
+
+        <Grid Name="itemGrid" Grid.Column="0" HorizontalAlignment="Left" Width="150" Background="Gray">
+            <ItemsControl ItemsSource="{Binding MenuItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding PushCommand}" CommandParameter="{Binding Index}" Background="{Binding Color}">
+                            <StackPanel>
+                                <Image Source="{Binding Image}" Width="50" Height="50" />
+                                <TextBlock Text="{Binding Text}"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <Grid Name="gameTableGrid" Grid.Column="1" VerticalAlignment="Bottom"
+             Width="{Binding Width}" Height="{Binding Height}" Margin="150, 0, 350, 0">
+            <ItemsControl ItemsSource="{Binding Fields}" Grid.ColumnSpan="2">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="40" Rows="30"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding StepCommand}" CommandParameter="{Binding Index}" Background="{Binding Colour}"
+                                Width="{Binding Width}" Height="{Binding Height}" BorderThickness="0">
+                            <Button.InputBindings>
+                                <MouseBinding Gesture="RightClick" Command="{Binding Inspect}" CommandParameter="{Binding Index}" />
+                            </Button.InputBindings>
+                            <StackPanel>
+                                <Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" Stretch="Fill" />
+                                <TextBlock Text="{Binding Text}"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Grid.Row" Value="{Binding X}" />
+                        <Setter Property="Grid.Column" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</Window>

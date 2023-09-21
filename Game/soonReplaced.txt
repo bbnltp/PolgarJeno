@@ -1,0 +1,166 @@
+20
+6 15
+7 15
+8 7
+8 12
+8 15
+9 5
+9 6
+9 7
+9 8
+9 9
+9 10
+9 11
+9 12
+9 13
+9 14
+9 15
+10 5
+11 5
+12 4
+12 5
+5
+6 10 7
+7 10 12
+5 4 15
+7 13 3
+7 13 5
+2
+7 1 1
+7 16 1
+0
+2
+4 6 2 2
+0 5 30
+1 11 0
+4 11 2 2
+1 2 20
+0 10 0
+0 1 21
+60
+BarnaVincze 28 21 0 1 0 0
+2500 
+FazekasEmőke 58 21 0 1 0 0
+2500 
+NemesMárton 27 21 0 1 0 0
+2500 
+NagyEszter 22 21 0 1 0 0
+2500 
+TörökAndrea 21 21 0 1 0 0
+2500 
+NagyAndrás 60 21 0 1 0 0
+2500 
+HalmaiTímea 60 21 0 1 0 0
+2500 
+BíróNikoletta 32 21 0 1 0 0
+2500 
+NemesMárton 26 21 0 1 0 0
+2500 
+PapEndre 48 21 0 1 0 0
+2500 
+EgediViktor 29 6 0 1 1 1
+2500 
+BarnaVincze 20 6 0 1 1 1
+2500 
+GipszJakab 33 6 0 1 1 1
+2500 
+HalmaiTímea 31 6 0 1 1 1
+2500 
+BíróNikoletta 55 6 0 1 1 1
+2500 
+HegedűsÁron 41 6 0 1 1 1
+2500 
+HajduBarnabás 55 6 0 1 1 1
+2500 
+NagyEszter 41 6 0 1 1 1
+2500 
+BalázsZsombor 25 6 0 1 1 1
+2500 
+GipszJakab 50 6 0 1 1 1
+2500 
+TörökAndrea 18 21 0 1 0 0
+1000 
+NagyEszter 18 21 0 1 0 0
+1000 
+NagyAndrás 30 21 0 1 0 0
+1000 
+HajduBarnabás 23 21 0 1 0 0
+1000 
+TörökAndrea 45 21 0 1 0 0
+1000 
+NemesMárton 51 21 0 1 0 0
+1000 
+NagyEszter 53 21 0 1 0 0
+1000 
+GipszJakab 33 21 0 1 0 0
+1000 
+NemesMárton 37 21 0 1 0 0
+1000 
+BíróNikoletta 33 21 0 1 0 0
+1000 
+PapEndre 41 21 0 1 1 1
+1000 
+PapEndre 54 21 0 1 1 1
+1000 
+PapEndre 27 21 0 1 1 1
+1000 
+NagyEszter 18 21 0 1 1 1
+1000 
+PapEndre 32 21 0 1 1 1
+1000 
+HajduBarnabás 49 21 0 1 1 1
+1000 
+TörökAndrea 36 21 0 1 1 1
+1000 
+PapEndre 27 21 0 1 1 1
+1000 
+VargaBalázs 46 21 0 1 1 1
+1000 
+HalmaiTímea 26 21 0 1 1 1
+1000 
+NagyAndrás 31 21 0 1 0 0
+500 
+HegedűsÁron 31 21 0 1 0 0
+500 
+FazekasEmőke 29 21 0 1 0 0
+500 
+HegedűsÁron 48 21 0 1 0 0
+500 
+HegedűsÁron 58 21 0 1 0 0
+500 
+EgediViktor 23 21 0 1 0 0
+500 
+FazekasEmőke 45 21 0 1 0 0
+500 
+TörökAndrea 59 21 0 1 0 0
+500 
+HalmaiTímea 31 21 0 1 0 0
+500 
+HajduBarnabás 58 21 0 1 0 0
+500 
+NemesMárton 50 21 0 1 1 1
+500 
+PolgárJenő 39 21 0 1 1 1
+500 
+FazekasEmőke 21 21 0 1 1 1
+500 
+TörökAndrea 32 21 0 1 1 1
+500 
+PolgárJenő 50 21 0 1 1 1
+500 
+NagyEszter 30 21 0 1 1 1
+500 
+VargaBalázs 43 21 0 1 1 1
+500 
+NagyEszter 53 21 0 1 1 1
+500 
+VargaBalázs 29 21 0 1 1 1
+500 
+PolgárJenő 46 21 0 1 1 1
+500 
+20 30000 -88800 0
+5000
+5000
+30000
+2000
+2000 6 14 0

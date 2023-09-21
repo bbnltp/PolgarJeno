@@ -1,0 +1,226 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+using SimCity.Model.Population;
+using SimCity.Model.Table;
+//using SimCity.Model.Timer;
+using SimCity.Model.Table.Field;
+using SimCity.Model.Table.Field.Zone;
+using SimCity.Model.Table.Field.PublicFacility;
+
+namespace SimCity.Model
+{
+    public class GameModel
+    {
+        #region Fields
+
+        private GameTable      gameTable;
+        private GameTimer      gameTimer;
+        private GameEconomy    gameEconomy;
+        private GamePopulation gamePopulation;
+        //private GameTimer gameTimer;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler GameOver;
+        public event EventHandler GameCreated;
+        public event EventHandler GameAdvanced;
+
+        #endregion
+
+        #region Constructors
+
+        public GameModel(IGamePersistence dataAccess)
+        {
+            _dataAccess = dataAccess;
+            gameTable = new GameTable();
+            gameTimer = new GameTimer(2000, Month.January, 1, PlaySpeedType.Normal);
+            gameEconomy = new GameEconomy();
+            gameEconomy.invokeEconomyChanged();
+            gamePopulation = new GamePopulation();
+        }
+
+        #endregion
+
+
+        #region Properties
+
+        private IGamePersistence _dataAccess;
+        public int Height
+        { 
+            get { return gameTable.Height; } 
+            set { gameTable.Height = value; } 
+        }
+
+        public int Width
+        {
+            get { return gameTable.Widht; }
+            set { gameTable.Widht = value; }
+        }
+
+        //===================== GameTable =======================
+
+        public TableField[,] Table
+        {
+            get { return gameTable.Table; }
+        }
+
+        //===================== GameTimer =======================
+
+        public PlaySpeedType PlaySpeed
+        {
+            get { return gameTimer.PlaySpeed; }
+            set { gameTimer.PlaySpeed = value; }
+        }
+
+        public int CurrentYear
+        {
+            get { return gameTimer.CurrentYear; }
+        }
+
+        public Month CurrentMonth
+        {
+            get { return gameTimer.CurrentMonth; }
+        }
+
+        public int CurrentDay
+        {
+            get { return gameTimer.CurrentDay; }
+        }
+
+        //===================== GameEconomy =======================
+
+        public int TaxRate
+        {
+            get { return gameEconomy.TaxRate; }
+            set { gameEconomy.TaxRate = value; }
+        }
+
+        public int GameFunds
+        {
+            get { return gameEconomy.GameFunds; }
+        }
+
+        public int RetirementExpenses
+        {
+            get { return gameEconomy.RetirementExpenses; }
+        }
+
+        //================= GamePopulation ====================
+        
+        public HappinessLevel HappinessLevel
+        {
+            get { return gamePopulation.HappinessLevel; }
+        }
+
+        public int PopulationCounter
+        {
+            get { return gamePopulation.PopulationCounter; }
+        }
+
+        public int RetiredCounter
+        {
+            get { return gamePopulation.RetiredCounter; }
+        }
+
+
+
+        #endregion
+
+
+        #region Public Methods
+
+        //Balázs
+        public void citizentsBuild()
+        {
+            foreach (var item in gameTable.ResidentialZones)
+            {
+                if (item.IsAccessible())
+                {
+                    //TODO építsenek
+                }
+            }
+
+			foreach (var item in gameTable.CommertialZones)
+			{
+				if (item.IsAccessible())
+				{
+					//TODO építsenek
+				}
+			}
+
+			foreach (var item in gameTable.IndustrialZones)
+			{
+				if (item.IsAccessible())
+				{
+					//TODO építsenek
+				}
+			}
+		}
+
+        public void timeCollapse()
+        {
+            
+        }
+
+        public void satisfactionMeasure()
+        {
+
+        }
+
+        /// <summary>
+        /// Lehelyez a játéktáblára egy adott típusú elemet.
+        /// </summary>
+        /// <param name="row">Sor pozíció. (Bal felső pozícióhoz)</param>
+        /// <param name="column">Oszlop pozíció. (Bal felső pocícióhoz)</param>
+        /// <param name="fieldtype">Milyen típusú mezőt helyezzünk le.</param>
+		public void PlaceTableField(int row, int column, TableFieldType fieldtype)
+        {
+            gameTable.PlaceField(row, column, fieldtype);
+        }
+
+        /// <summary>
+        /// Töröli a játéktábláról a megadott pozícióból az ott lévő mezőelemet.
+        /// </summary>
+        /// <param name="row">Sor pozíció. (Bal felső pozícióhoz)</param>
+        /// <param name="column">Oszlop pozíció. (Bal felső pocícióhoz)</param>
+        public void RemoveTableField(int row, int column) 
+        { 
+            gameTable.RemoveField(row, column);
+        }
+
+        /// <summary>
+        /// Visszaadja a játéktábla adott pozíciójában lévő zónát.
+        /// </summary>
+        /// <param name="row">Sor pozíció. (Bal felső pozícióhoz)</param>
+        /// <param name="column">Oszlop pozíció. (Bal felső pocícióhoz)</param>
+        /// <returns>Az adott pozíción lévő zóna.</returns>
+        public Zone GetZone(int row, int column)
+        {
+            return gameTable.GetZone(row, column);
+        }
+
+<<<<<<< HEAD
+        public async Task LoadGameAsync(String path)
+        {
+            if (_dataAccess == null)
+                throw new InvalidOperationException("No data access is provided.");
+
+            gameTable = await _dataAccess.LoadAsync(path);
+            gameTimer = new GameTimer(2000, Month.January, 1, PlaySpeedType.Normal);
+            gameEconomy = new GameEconomy();
+            gamePopulation = new GamePopulation();
+=======
+        public PublicFacility GetFacility(int row,int column)
+        {
+            return gameTable.GetFacility(row, column);
+>>>>>>> feature_SM-62_Információk_lekérdezése
+        }
+
+        #endregion
+    }
+}

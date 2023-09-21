@@ -1,0 +1,44 @@
+﻿<Window x:Class="SimCity.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1500"
+        HorizontalAlignment="Center" VerticalAlignment="Top">
+    <Grid>
+        <TextBlock Name="title"
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0, 200, 0, 0"
+            FontSize="75"> Polgár Jenő hivatal
+        </TextBlock>
+
+        <TextBlock Name="owners"
+            HorizontalAlignment="Right" VerticalAlignment="Bottom"
+            Margin="0, 0, 25, 25"
+            FontSize="30" TextAlignment="Right">
+                The proud owners of the game: <LineBreak />
+                Halmai Tímea <LineBreak />
+                Egedi Viktor <LineBreak />
+                Varga Balázs <LineBreak />
+                Molnár Richárd
+        </TextBlock>
+
+        <Button Name="newGameBtn" Width="350" Height="75"
+            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="25, 0, 0, 125"
+            Content="New Game" FontSize="30"
+            Background="Pink" BorderBrush="Black" BorderThickness="1" 
+            Click="NewGame" ClickMode="Press">
+        </Button>
+
+        <Button Name="loadGameBtn" Width="350" Height="75"
+            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="25, 0, 0, 25"
+            Content="Load Game" FontSize="30"
+            Background="LightBlue" BorderBrush="Black" BorderThickness="1" 
+            Click="LoadGame" ClickMode="Press">
+        </Button>
+
+    </Grid>
+</Window>
