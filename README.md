@@ -1,4 +1,4 @@
 # PolgarJeno
 
-Ez egy fél éves projekt volt, melyben 4-en scrum módszertannal dolgoztunk egy SimCityhez hasonló játék létrehozásában. 
-A projektet felosztottuk különböző ágakra, mindannyian végigkövettük egy-egy funkciót a persistencetől a viewmodelig, így találtuk fairnek a felosztást, a program strukturáját pedig együtt határoztuk meg az elején.
+
+Fél éves projekt során, 4 fős csapatban scrum módszertannal dolgoztunk, egy SimCity-szerű játék létrehozásán. Az egyes funkciókat persistencetől viewmodelig felosztottuk, biztosítva a feladatok igazságos elosztását. A program struktúráját közösen határoztuk meg az elején. A tesztelést unit tesztekkel biztosítottuk, hogy minden részlet a terveknek megfelelően működjön a projektben.
